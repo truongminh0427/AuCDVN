@@ -29,7 +29,13 @@ local function waitForGameLoaded()
 	repeat
 		task.wait()
 	until game:IsLoaded() and player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+	task.wait(2) -- đợi thêm tí cho chắc chắn
+		--print("⌨️ Nhấn 2 lần phím N")
+		pressKey(Enum.KeyCode.N)
+		task.wait(1)
+		pressKey(Enum.KeyCode.N)
 end
+waitForGameLoaded()
 
 local REJOIN_DELAY = 540 -- 9 phút
 
@@ -38,22 +44,7 @@ task.delay(REJOIN_DELAY, function()
 	TeleportService:Teleport(game.PlaceId, player)
 end)
 
--- Khi Teleport thành công và quay lại → nhấn 2 lần phím N
-player.OnTeleport:Connect(function(state)
-	if state == Enum.TeleportState.Started then
-		print("🔁 Đang chuyển server...")
-	elseif state == Enum.TeleportState.Completed then
-		print("✅ Teleport hoàn tất → chờ game load để nhấn phím N")
 
-		waitForGameLoaded()
-
-		task.wait(2) -- đợi thêm tí cho chắc chắn
-		--print("⌨️ Nhấn 2 lần phím N")
-		pressKey(Enum.KeyCode.N)
-		task.wait(1)
-		pressKey(Enum.KeyCode.N)
-	end
-end)
 
 local autoDeliveryEnabled = true -- 🔁 Biến bật/tắt tự động
 
