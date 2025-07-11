@@ -86,16 +86,16 @@ local function Teleport(destination)
     end
 
     TweenService:Create(hrp, TweenInfo.new(0.5), {
-        CFrame = hrp.CFrame + Vector3.new(0, 5, 0)
+        CFrame = hrp.CFrame + Vector3.new(0, 1, 0)
     }):Play()
     task.wait(0.5)
 
-    local flyTarget = destination + Vector3.new(0, 5, 0)
+    local flyTarget = destination + Vector3.new(0, 1, 0)
     local dist = (hrp.Position - flyTarget).Magnitude
-    TweenService:Create(hrp, TweenInfo.new(dist / 60, Enum.EasingStyle.Linear), {
+    TweenService:Create(hrp, TweenInfo.new(dist / 50, Enum.EasingStyle.Linear), {
         CFrame = CFrame.new(flyTarget)
     }):Play()
-    task.wait(dist / 60)
+    task.wait(dist / 50)
 
     character:SetPrimaryPartCFrame(CFrame.new(destination))
 
