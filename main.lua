@@ -124,12 +124,17 @@ KnitRemote.OnClientEvent:Connect(function(...)
     if typeof(target) == "Vector3" then
         tempPos = target
         task.delay(0.5, function() 
+       local block = workspace:FindFirstChild("MyBlock")
+       if box then
+	  block.Poisition = target
+	else
         local newPart = Instance.new("Part")
         newPart.Name = "MyBlock"
-        newPart.Size = Vector3.new(4, 1, 4)
+        newPart.Size = Vector3.new(1, 1, 1)
         newPart.Position = target
         newPart.Anchored = true
         newPart.Parent = workspace
+	end
         Teleport(tempPos) 
         
         end)
