@@ -126,7 +126,7 @@ KnitRemote.OnClientEvent:Connect(function(...)
         task.delay(0.5, function() 
        local block = workspace:FindFirstChild("MyBlock")
        if box then
-	  block.Poisition = target
+	  block.Position = target
 	else
         local newPart = Instance.new("Part")
         newPart.Name = "MyBlock"
