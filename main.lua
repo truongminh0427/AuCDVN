@@ -155,7 +155,7 @@ KnitRemote.OnClientEvent:Connect(function(...)
             warn("❌ Không thể phân tích tọa độ:", target)
         end
     else
-        warn("⚠️ args[2] không hợp lệ:", target)
+        --warn("⚠️ args[2] không hợp lệ:", target)
         Teleport(boxStartPos)
         
     end
