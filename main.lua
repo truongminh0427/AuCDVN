@@ -19,7 +19,23 @@ local KnitRemote = ReplicatedStorage:WaitForChild("KnitPackages")
 
 local TeleportService = game:GetService("TeleportService")
 
+
+
 local player = Players.LocalPlayer
+
+local function pressKey(keycode)
+    VirtualInputManager:SendKeyEvent(true, keycode, false, game)
+    task.wait(0.1)
+    VirtualInputManager:SendKeyEvent(false, keycode, false, game)
+end
+
+-- Hàm chờ game load hoàn toàn sau khi Teleport
+local function waitForGameLoaded()
+	repeat
+		task.wait()
+	until game:IsLoaded() and player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+end
+
 local REJOIN_DELAY = 540 -- 9 phút
 
 task.delay(REJOIN_DELAY, function()
@@ -27,11 +43,28 @@ task.delay(REJOIN_DELAY, function()
 	TeleportService:Teleport(game.PlaceId, player)
 end)
 
-local function pressKey(keycode)
-    VirtualInputManager:SendKeyEvent(true, keycode, false, game)
-    task.wait(0.1)
-    VirtualInputManager:SendKeyEvent(false, keycode, false, game)
-end
+Players.LocalPlayer.OnKick:Connect(function()
+	print("🚪 Bị kick khỏi server! Thử vào lại sau 5 giây...")
+	task.wait(5)
+	TeleportService:Teleport(game.PlaceId)
+end)
+
+-- Khi Teleport thành công và quay lại → nhấn 2 lần phím N
+player.OnTeleport:Connect(function(state)
+	if state == Enum.TeleportState.Started then
+		print("🔁 Đang chuyển server...")
+	elseif state == Enum.TeleportState.Completed then
+		print("✅ Teleport hoàn tất → chờ game load để nhấn phím N")
+
+		waitForGameLoaded()
+
+		task.wait(2) -- đợi thêm tí cho chắc chắn
+		--print("⌨️ Nhấn 2 lần phím N")
+		pressKey(Enum.KeyCode.N)
+		task.wait(1)
+		pressKey(Enum.KeyCode.N)
+	end
+end)
 
 local autoDeliveryEnabled = true -- 🔁 Biến bật/tắt tự động
 
