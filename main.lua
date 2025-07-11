@@ -38,12 +38,6 @@ task.delay(REJOIN_DELAY, function()
 	TeleportService:Teleport(game.PlaceId, player)
 end)
 
-player.OnKick:Connect(function()
-	print("🚪 Bị kick khỏi server! Thử vào lại sau 5 giây...")
-	task.wait(5)
-	TeleportService:Teleport(game.PlaceId)
-end)
-
 -- Khi Teleport thành công và quay lại → nhấn 2 lần phím N
 player.OnTeleport:Connect(function(state)
 	if state == Enum.TeleportState.Started then
