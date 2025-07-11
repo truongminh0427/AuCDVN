@@ -40,7 +40,7 @@ local function monitorCharacter(character)
 
 	RunService.Heartbeat:Connect(function()
 		if humanoid.Sit then
-			print("🪑 Nhân vật đang ngồi → nhảy lên!")
+			--print("🪑 Nhân vật đang ngồi → nhảy lên!")
 			pressKey(Enum.KeyCode.Space)
 		end
 	end)
@@ -61,7 +61,7 @@ local function setPromptsHoldDurationZero()
     for _, p in ipairs(deliveryPoints:GetDescendants()) do
         if p:IsA("ProximityPrompt") then
             p.HoldDuration = 0
-            print("✅ HoldDuration set to 0:", p:GetFullName())
+            --print("✅ HoldDuration set to 0:", p:GetFullName())
         end
     end
 end
@@ -69,7 +69,7 @@ end
 deliveryPoints.DescendantAdded:Connect(function(p)
     if autoDeliveryEnabled and p:IsA("ProximityPrompt") then
         p.HoldDuration = 0
-        print("🆕 ProximityPrompt mới - HoldDuration = 0:", p:GetFullName())
+        --print("🆕 ProximityPrompt mới - HoldDuration = 0:", p:GetFullName())
     end
 end)
 
@@ -103,12 +103,12 @@ local function Teleport(destination)
         if part:IsA("BasePart") then part.CanCollide = true end
     end
 
-    print("✅ Đã dịch chuyển đến:", destination)
+    --print("✅ Đã dịch chuyển đến:", destination)
     if destination ~= boxStartPos then
         setPromptsHoldDurationZero()
         task.wait(0.5)
         pressKey(Enum.KeyCode.E)
-        print("🟢 Đã mô phỏng phím E")
+        --print("🟢 Đã mô phỏng phím E")
     elseif destination == boxStartPos then
         task.wait(0.5)
         local box = workspace.GrabDelivery.Box:FindFirstChild("Start")
@@ -126,7 +126,7 @@ KnitRemote.OnClientEvent:Connect(function(...)
     if not autoDeliveryEnabled then return end
     local args = {...}
     local target = args[2]
-    print("📡 arrow RemoteEvent nhận args[2]:", target)
+    --print("📡 arrow RemoteEvent nhận args[2]:", target)
 
     if typeof(target) == "Vector3" then
         task.delay(0.5, function() 
@@ -170,7 +170,7 @@ local function checkArrowSpawnChildren()
 
     local children = arrowSpawn:GetChildren()
     if #children == 0 then
-        print("ℹ️ ArrowSpawn không chứa tệp con nào.")
+        --print("ℹ️ ArrowSpawn không chứa tệp con nào.")
         Teleport(boxStartPos)
     else
     local part = workspace:FindFirstChild("Var")
@@ -191,14 +191,14 @@ if autoDeliveryEnabled then
     checkArrowSpawnChildren()
     Teleport(boxStartPos)
     workspace.GrabDelivery.Box.Start.ProximityPrompt.HoldDuration = 0
-    print("🔧 HoldDuration BoxStart = 0")
+    --print("🔧 HoldDuration BoxStart = 0")
     task.wait(0.5)
     pressKey(Enum.KeyCode.F)
-    print("🟢 Đã mô phỏng phím F")
+    --print("🟢 Đã mô phỏng phím F")
     setPromptsHoldDurationZero()
 end
 
-print("✅ Auto Grab Delivery is running...")
+--print("✅ Auto Grab Delivery is running...")
 
 spawn(function()
     while autoDeliveryEnabled do
