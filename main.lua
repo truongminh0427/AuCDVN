@@ -130,8 +130,8 @@ KnitRemote.OnClientEvent:Connect(function(...)
 
     if typeof(target) == "Vector3" then
         task.delay(0.5, function() 
-       local block = workspace:FindFirstChild("Var")
-       if box then
+       local var = workspace:FindFirstChild("Var")
+       if var then
 	  block.Position = target
 	else
         local newPart = Instance.new("Part")
