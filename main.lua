@@ -2,8 +2,6 @@ local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-
 local deliveryPoints = workspace:WaitForChild("GrabDelivery"):WaitForChild("DeliveryPoints")
 
 local boxStartPos = Vector3.new(831.759216, 20.4433231, -490.5047)
@@ -18,9 +16,6 @@ local KnitRemote = ReplicatedStorage:WaitForChild("KnitPackages")
     :WaitForChild("arrow")
 
 local TeleportService = game:GetService("TeleportService")
-
-
-
 local player = Players.LocalPlayer
 
 local function pressKey(keycode)
@@ -43,7 +38,7 @@ task.delay(REJOIN_DELAY, function()
 	TeleportService:Teleport(game.PlaceId, player)
 end)
 
-Players.LocalPlayer.OnKick:Connect(function()
+player.OnKick:Connect(function()
 	print("🚪 Bị kick khỏi server! Thử vào lại sau 5 giây...")
 	task.wait(5)
 	TeleportService:Teleport(game.PlaceId)
