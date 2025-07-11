@@ -27,6 +27,13 @@ local autoDeliveryEnabled = true -- 🔁 Biến bật/tắt tự động
 local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
+
+local function pressKey(keycode)
+    VirtualInputManager:SendKeyEvent(true, keycode, false, game)
+    task.wait(0.1)
+    VirtualInputManager:SendKeyEvent(false, keycode, false, game)
+end
+
 -- Hàm thiết lập theo dõi nhân vật mới
 local function monitorCharacter(character)
 	local humanoid = character:WaitForChild("Humanoid")
@@ -122,20 +129,19 @@ KnitRemote.OnClientEvent:Connect(function(...)
     print("📡 arrow RemoteEvent nhận args[2]:", target)
 
     if typeof(target) == "Vector3" then
-        tempPos = target
         task.delay(0.5, function() 
-       local block = workspace:FindFirstChild("MyBlock")
+       local block = workspace:FindFirstChild("Var")
        if box then
 	  block.Position = target
 	else
         local newPart = Instance.new("Part")
-        newPart.Name = "MyBlock"
+        newPart.Name = "Var"
         newPart.Size = Vector3.new(1, 1, 1)
         newPart.Position = target
         newPart.Anchored = true
         newPart.Parent = workspace
 	end
-        Teleport(tempPos) 
+        Teleport(target) 
         
         end)
     elseif typeof(target) == "string" and string.find(target, ",") then
@@ -167,7 +173,7 @@ local function checkArrowSpawnChildren()
         print("ℹ️ ArrowSpawn không chứa tệp con nào.")
         Teleport(boxStartPos)
     else
-    local part = workspace:FindFirstChild("MyBlock")
+    local part = workspace:FindFirstChild("Var")
 if part then
 	Teleport(part.Position)
 else
