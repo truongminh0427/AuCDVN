@@ -16,6 +16,11 @@ local KnitRemote = ReplicatedStorage:WaitForChild("KnitPackages")
     :WaitForChild("JobService")
     :WaitForChild("RE")
     :WaitForChild("arrow")
+local function pressKey(keycode)
+    VirtualInputManager:SendKeyEvent(true, keycode, false, game)
+    task.wait(0.1)
+    VirtualInputManager:SendKeyEvent(false, keycode, false, game)
+end
 
 local autoDeliveryEnabled = true -- 🔁 Biến bật/tắt tự động
 
@@ -44,11 +49,6 @@ player.CharacterAdded:Connect(monitorCharacter)
 
 
 
-local function pressKey(keycode)
-    VirtualInputManager:SendKeyEvent(true, keycode, false, game)
-    task.wait(0.1)
-    VirtualInputManager:SendKeyEvent(false, keycode, false, game)
-end
 
 local function setPromptsHoldDurationZero()
     for _, p in ipairs(deliveryPoints:GetDescendants()) do
