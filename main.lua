@@ -16,6 +16,17 @@ local KnitRemote = ReplicatedStorage:WaitForChild("KnitPackages")
     :WaitForChild("JobService")
     :WaitForChild("RE")
     :WaitForChild("arrow")
+
+local TeleportService = game:GetService("TeleportService")
+
+local player = Players.LocalPlayer
+local REJOIN_DELAY = 540 -- 9 phút
+
+task.delay(REJOIN_DELAY, function()
+	--print("🔁 9 phút đã trôi qua → đang tự động rejoin game...")
+	TeleportService:Teleport(game.PlaceId, player)
+end)
+
 local function pressKey(keycode)
     VirtualInputManager:SendKeyEvent(true, keycode, false, game)
     task.wait(0.1)
